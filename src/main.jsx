@@ -16,11 +16,15 @@ import Posts from './Components/Posts/Posts.jsx';
 import PostDetails from './Components/PostDetails/PostDetails.jsx';
 import Photos from './Components/Gallery/Photos.jsx';
 import PhotoDetails from './Components/Gallery/PhotoDetails.jsx';
+import ErrorPage from './Components/ErrorPage/ErrorPage.jsx';
+import Meals from './Components/Meals/Meals.jsx';
+import MealDetails from './Components/Meals/MealDetails.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home></Home>,
-    children:[
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
       {
         path: '/contact',
         element: <Contact></Contact>
@@ -31,41 +35,50 @@ const router = createBrowserRouter([
       },
       {
         path: '/users',
-        loader: ()=> fetch('https://jsonplaceholder.typicode.com/users'), 
+        loader: () => fetch('https://jsonplaceholder.typicode.com/users'),
         element: <Users></Users>
       },
       {
         path: '/user/:userId',
-        loader: ({params})=>fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
+        loader: ({ params }) => fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
         element: <UserInfo></UserInfo>
       },
       {
         path: '/posts',
-        loader: ()=> fetch('https://jsonplaceholder.typicode.com/posts'),
-        element:<Posts></Posts>
+        loader: () => fetch('https://jsonplaceholder.typicode.com/posts'),
+        element: <Posts></Posts>
       },
       {
         path: '/post/:postId',
-        loader: ({params})=> fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`),
+        loader: ({ params }) => fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`),
         element: <PostDetails></PostDetails>
       },
       {
         path: '/photos',
-        loader: ()=> fetch('https://jsonplaceholder.typicode.com/photos'),
+        loader: () => fetch('https://jsonplaceholder.typicode.com/photos'),
         element: <Photos></Photos>
       },
       {
         path: '/photo/:photoId',
-        loader: ({params})=> fetch(`https://jsonplaceholder.typicode.com/photos/${params.photoId}`),
+        loader: ({ params }) => fetch(`https://jsonplaceholder.typicode.com/photos/${params.photoId}`),
         element: <PhotoDetails></PhotoDetails>
-      }
+      }, {
+        path: '/meals',
+        loader: () => fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=a'),
+        element: <Meals></Meals>
+      },
+      {
+        path: '/meal/:idMeal',
+        loader: ({ params }) => fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.idMeal}`),
+        element: <MealDetails></MealDetails>,
+      },
     ]
-}
+  }
 
 ]);
 RouterProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-  <RouterProvider router={router}></RouterProvider>
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>,
 )

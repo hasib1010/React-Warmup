@@ -10,7 +10,7 @@ const Photos = () => {
             <h1>All Photos: {photos.length}</h1>
             <div className="gallery">
                 {
-                    photos.map(photo=><Photo photo={photo}></Photo>)
+                    photos.map(photo=><Photo photo={photo} key={photo.id}></Photo>)
                 }
             </div>
         </div>
